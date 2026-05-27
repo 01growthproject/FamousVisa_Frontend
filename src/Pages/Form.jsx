@@ -936,8 +936,8 @@ const FormContent = () => {
       <div className="form-wrapper">
         <div className="form-container">
           <div className="form-header">
-            <h2>📋 Client Registration Form</h2>
-            <p>Complete KYC with Live Document Capture</p>
+            <h2>Registration Form📋</h2>
+            {/* <p>Complete KYC with Live Document Capture</p> */}
           </div>
 
           <div className="progress-container">

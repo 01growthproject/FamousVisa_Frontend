@@ -37,7 +37,7 @@ const Navbar = () => {
             <div className="nav-container">
                 {/* Logo */}
                 <div className="nav-logo" onClick={() => navigate("/home")}>
-                    <img src="/logo.jpg" alt="Logo" className="nav-logo-img" />
+                    <img src="/logoo.png"  alt="Logo" className="nav-logo-img" />
                     <div className="nav-logo-text">
                         {/* <h2>Growth Overseas</h2>
                         <span>International Edutech</span> */}

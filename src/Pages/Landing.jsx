@@ -16,12 +16,9 @@ const Landing = () => {
       <nav className="landing-nav">
         <div className="nav-container">
           <div className="nav-logo">
-            <img src="/logo.jpg" alt="Logo" className="nav-logo-img" />
-            {/* <div className="nav-logo-text">
-              <h2>Growth Overseas</h2>
-              <span>International Edutech</span>
-            </div> */}
+            <img src="/logoo.png" alt="Logo" className="nav-logo-img" />
           </div>
+
           <Link to="/login" className="nav-login-btn">
             Login
           </Link>
@@ -33,25 +30,38 @@ const Landing = () => {
           <div className="hero-content">
             <div className="hero-badge">
               <span className="badge-icon">✨</span>
-              <span className="badge-text">Professional Client Management System</span>
+
+              <span className="badge-text">
+                Professional Visa Client Management System
+              </span>
             </div>
 
             <h1 className="hero-title">
-              Transform Your
-              <span className="hero-title-gradient"> International Education Journey</span>
+              Start Your
+              <span className="hero-title-gradient">
+                {" "}
+                Global Visa Journey
+              </span>
             </h1>
 
             <p className="hero-subtitle">
-              Streamline your global education consulting with our secure, fast, and intuitive platform designed specifically for education consultants and agencies.
+              Simplify visa applications, client management, and document
+              tracking with our secure and modern platform built for visa
+              consultants and immigration agencies.
             </p>
 
             <div className="hero-cta">
               <Link to="/login" className="cta-primary">
-                <span className="cta-icon">🚀</span>
+                <span className="cta-icon"></span>
+
                 <span className="cta-text">
                   <span className="cta-title">Get Started</span>
-                  <span className="cta-subtitle">Access Dashboard</span>
+
+                  <span className="cta-subtitle">
+                    Access Dashboard
+                  </span>
                 </span>
+
                 <span className="cta-arrow">→</span>
               </Link>
 
@@ -60,9 +70,9 @@ const Landing = () => {
                   <div className="stat-icon-wrapper">
                     <span className="stat-icon">⚡</span>
                   </div>
+
                   <div className="stat-content">
-                    <span className="stat-number">Fast Setup</span>
-                    {/* <span className="stat-label">Setup</span> */}
+                    <span className="stat-number">Fast Process</span>
                   </div>
                 </div>
 
@@ -70,19 +80,19 @@ const Landing = () => {
                   <div className="stat-icon-wrapper">
                     <span className="stat-icon">🔒</span>
                   </div>
+
                   <div className="stat-content">
-                    <span className="stat-number">Data Secure</span>
-                    {/* <span className="stat-label">Secure</span> */}
+                    <span className="stat-number">Secure Data</span>
                   </div>
                 </div>
 
                 <div className="stat-item">
                   <div className="stat-icon-wrapper">
-                    <span className="stat-icon">🌐</span>
+                    <span className="stat-icon">🌍</span>
                   </div>
+
                   <div className="stat-content">
-                    <span className="stat-number">Global Reach</span>
-                    {/* <span className="stat-label">Reach</span> */}
+                    <span className="stat-number">Worldwide Services</span>
                   </div>
                 </div>
               </div>
@@ -91,43 +101,64 @@ const Landing = () => {
 
           <div className="hero-visual">
             <div className="visual-card main-card">
-              <div className="card-header">
-                <div className="card-icon">🎓</div>
+              {/* <div className="card-header">
+                <div className="card-icon">✈️</div>
+
                 <div className="card-badge">Live</div>
-              </div>
+              </div> */}
+
               <div className="visual-content">
-                <h3>Client Management System  </h3>
-                <p>Efficiently manage client registrations, Track applications, Store client information</p>
+                <h3>Visa Client Management System</h3>
+
+                <p>
+                  Manage visa applications, track client documents,
+                  monitor case progress, and streamline daily
+                  operations efficiently.
+                </p>
+
                 <div className="card-features">
                   <div className="feature-item">
                     <span className="feature-check">✓</span>
-                    <span>Real-time Updates</span>
+
+                    <span>Application Tracking</span>
                   </div>
+
                   <div className="feature-item">
                     <span className="feature-check">✓</span>
-                    <span>Secure Storage</span>
+
+                    <span>Secure Documents</span>
                   </div>
+
                   <div className="feature-item">
                     <span className="feature-check">✓</span>
-                    <span>Easy Access</span>
+
+                    <span>Easy Client Access</span>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="floating-card card-1">
-              <div className="mini-icon">📊</div>
+              <div className="mini-icon">📄</div>
+
               <div className="mini-text">
-                <span className="mini-title">Analytics</span>
-                <span className="mini-subtitle">Track Progress</span>
+                <span className="mini-title">Visa Files</span>
+
+                <span className="mini-subtitle">
+                  Manage Applications
+                </span>
               </div>
             </div>
 
             <div className="floating-card card-2">
-              <div className="mini-icon">📝</div>
+              <div className="mini-icon">🛂</div>
+
               <div className="mini-text">
-                <span className="mini-title">Forms</span>
-                <span className="mini-subtitle">Quick Register</span>
+                <span className="mini-title">Immigration</span>
+
+                <span className="mini-subtitle">
+                  Quick Processing
+                </span>
               </div>
             </div>
           </div>
@@ -139,41 +170,48 @@ const Landing = () => {
           <div className="footer-top">
             <div className="footer-brand">
               <div className="footer-logo">
-                {/* <span className="footer-logo-icon">🌍</span> */}
                 <div className="footer-logo-text">
-                  <h3>Growth Overseas</h3>
-                  <span>International Edutech</span>
+                  <h3>Famous Visa Consultant</h3>
+
+                  <span>Visa & Immigration Services</span>
                 </div>
               </div>
+
               <p className="footer-tagline">
-                Empowering dreams • Connecting futures • Building success
+                Trusted guidance • Global opportunities • Your visa partner
               </p>
+
               <p className="footer-copyright">
-                © 2018 Growth Overseas International Edutech. All rights reserved.
+                © 2018 Famous Visa Consultant. All rights reserved.
               </p>
             </div>
 
             <div className="footer-links">
               <div className="footer-column">
                 <h4>Quick Links</h4>
+
                 <Link to="/login">Admin Login</Link>
               </div>
 
               <div className="footer-column">
                 <h4>Contact</h4>
-                <p>📞 +91 98545 90005</p>
-                <p>📍 Zirakpur, Punjab</p>
-                <p>🌐 First floor, SCO 10-11,
-                  Ambala Road,
-                  Opposite to ICICI Bank
+
+                <p>
+                  📍 Second Floor, Famous Visa Consultant,
+                  SCO 1-2, Opposite Berkley Hyundai,
+                  Swastik Vihar, Utrathiya,
+                  Zirakpur, Punjab 140603
                 </p>
 
+                <p>✉️ info@famousvisaconsultant.com</p>
+
+                <p>📞 +91 98769 79635</p>
               </div>
             </div>
           </div>
         </div>
-      </footer >
-    </div >
+      </footer>
+    </div>
   );
 };
 

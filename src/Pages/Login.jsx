@@ -6,52 +6,41 @@ import "./Styles/Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(1); // 1 = Enter Email, 2 = Enter OTP
   const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [resendTimer, setResendTimer] = useState(0);
+  const [rememberMe, setRememberMe] = useState(false);
 
-  // const SESSION_TIMEOUT = 12 * 60 * 60 * 1000; // 12 hours
-  const STATIC_EMAIL = "01growth.project@gmail.com";
-
-  // Check existing session
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   const loginTime = localStorage.getItem("loginTime");
-
-  //   if (token && loginTime) {
-  //     const timeElapsed = Date.now() - parseInt(loginTime);
-  //     if (timeElapsed < SESSION_TIMEOUT) {
-  //       navigate("/home");
-  //     } else {
-  //       localStorage.clear();
-  //       toast.warning("Session expired. Please login again.");
-  //     }
-  //   }
-  // }, [navigate]);
-
-  // Check existing login session
+  // ✅ GET CREDENTIALS FROM ENV VARIABLES
+  const DEMO_EMAIL = import.meta.env.VITE_DEMO_EMAIL;
+  const DEMO_PASSWORD = import.meta.env.VITE_DEMO_PASSWORD;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       navigate("/home");
-
     }
   }, [navigate]);
 
-  // Resend timer countdown
-
   useEffect(() => {
-    if (resendTimer > 0) {
-      const timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
-      return () => clearTimeout(timer);
+    const savedEmail = localStorage.getItem("savedEmail");
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setRememberMe(true);
     }
-  }, [resendTimer]);
+  }, []);
 
-  // Step 1: Request OTP
-  const handleRequestOTP = async (e) => {
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const isValidPassword = (password) => {
+    return password.length >= 8; // ✅ CHANGED FROM 6 TO 8
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!email.trim()) {
@@ -59,40 +48,40 @@ const Login = () => {
       return;
     }
 
-    if (email !== STATIC_EMAIL) {
-      toast.error("Only admin email is allowed to login");
+    if (!isValidEmail(email)) {
+      toast.error("Please enter a valid email");
+      return;
+    }
+
+    if (!password) {
+      toast.error("Please enter password");
+      return;
+    }
+
+    if (!isValidPassword(password)) {
+      toast.error("Password must be at least 8 characters"); // ✅ UPDATED MESSAGE
       return;
     }
 
     try {
       setLoading(true);
-      const res = await Api.post("/request-otp", { email });
 
-      toast.success("OTP sent to your email! Check inbox.");
-      setStep(2);
-      setResendTimer(60); // 60 seconds cooldown
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to send OTP");
-    } finally {
-      setLoading(false);
-    }
-  };
+      // ✅ CALL BACKEND API
+      const res = await Api.post("/auth/login", {
+        email: email.toLowerCase().trim(),
+        password,
+      });
 
-  // Step 2: Verify OTP
-  const handleVerifyOTP = async (e) => {
-    e.preventDefault();
+      // Store token and user
+      localStorage.setItem("token", res.data.accessToken);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
-    if (!otp.trim() || otp.length !== 6) {
-      toast.error("Please enter 6-digit OTP");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const res = await Api.post("/verify-otp", { email, otp });
-
-      localStorage.setItem("token", res.data.token);
-      // localStorage.setItem("loginTime", Date.now().toString());
+      // Save email if "Remember Me" is checked
+      if (rememberMe) {
+        localStorage.setItem("savedEmail", email);
+      } else {
+        localStorage.removeItem("savedEmail");
+      }
 
       toast.success("Login successful! ✅");
 
@@ -100,36 +89,19 @@ const Login = () => {
         navigate("/home", { replace: true });
       }, 500);
     } catch (error) {
-      toast.error(error.response?.data?.message || "Invalid OTP");
-      setOtp("");
+      console.error("Login error:", error);
+      const errorMessage =
+        error.response?.data?.message || "Invalid email or password";
+      toast.error(errorMessage);
+      setPassword("");
     } finally {
       setLoading(false);
     }
   };
 
-  // Resend OTP
-  const handleResendOTP = async () => {
-    if (resendTimer > 0) return;
-
-    try {
-      setLoading(true);
-      await Api.post("/request-otp", { email });
-      toast.success("New OTP sent!");
-      setResendTimer(60);
-      setOtp("");
-    } catch (error) {
-      toast.error("Failed to resend OTP");
-    } finally {
-      setLoading(false);
-    }
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
-
-  // Back to email step
-  // const handleBack = () => {
-  //   setStep(1);
-  //   setOtp("");
-  //   setResendTimer(0);
-  // };
 
   return (
     <div className="login-container">
@@ -137,109 +109,81 @@ const Login = () => {
         <div className="login-card">
           <div className="login-header">
             <h2>🔐 Admin Login</h2>
-            <p>
-              {step === 1
-                ? "Enter your admin email to receive OTP"
-                : "Enter the OTP sent to your email"}
-            </p>
+            <p>Enter your credentials to access the dashboard</p>
           </div>
 
-          {step === 1 ? (
-            // Step 1: Email Input
-            <form onSubmit={handleRequestOTP} className="login-form">
-              <div className="form-group">
-                <label>Admin Email</label>
-                <input
-                  type="email"
-                  placeholder="Enter-email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={loading}
-                  autoFocus
-                />
-                <small style={{ color: '#666', fontSize: '12px' }}>
-                  Only authorized admin email can login
+          <form onSubmit={handleLogin} className="login-form">
+            {/* Email Input */}
+            <div className="form-group">
+              <label htmlFor="email">User id</label>
+              <input
+                id="email"
+                type="email"
+                placeholder={"Enter Id"} // ✅ SHOW DEMO EMAIL IN PLACEHOLDER
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
+                autoFocus
+                required
+              />
+              {email && !isValidEmail(email) && (
+                <small className="error-text">
+                  Please enter a valid email address
                 </small>
-              </div>
+              )}
+            </div>
 
-              <button type="submit" className="login-btn" disabled={loading}>
-                {loading ? "Sending OTP..." : "Send OTP 📧"}
-              </button>
-            </form>
-          ) : (
-            // Step 2: OTP Input
-            <form onSubmit={handleVerifyOTP} className="login-form">
-              <div className="form-group">
-                <label>Enter 6-Digit OTP</label>
+            {/* Password Input */}
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <div className="password-input-wrapper">
                 <input
-                  type="text"
-                  placeholder="000000"
-                  value={otp}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, '');
-                    if (value.length <= 6) setOtp(value);
-                  }}
-                  maxLength={6}
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   disabled={loading}
-                  autoFocus
-                  style={{
-                    fontSize: '24px',
-                    letterSpacing: '8px',
-                    textAlign: 'center',
-                    fontWeight: 'bold'
-                  }}
+                  required
                 />
-                <small style={{ color: '#666', fontSize: '12px' }}>
-                  Sent to: {email}
+                <button
+                  type="button"
+                  className="toggle-password"
+                  onClick={togglePasswordVisibility}
+                  disabled={loading}
+                  title={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? "👁️" : "👁️‍🗨️"}
+                </button>
+              </div>
+              {password && !isValidPassword(password) && (
+                <small className="error-text">
+                  Password must be at least 8
                 </small>
-              </div>
+              )}
+            </div>
 
-              <button type="submit" className="login-btn" disabled={loading}>
-                {loading ? "Verifying..." : "Verify & Login ✅"}
-              </button>
+            {/* Remember Me & Forgot Password */}
+            <div className="remember-forgot">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  disabled={loading}
+                />
+                Remember me
+              </label>
+              <a href="/forgot-password">Forgot password?</a>
+            </div>
 
-              <div style={{ textAlign: 'center', marginTop: '15px' }}>
-                {resendTimer > 0 ? (
-                  <p style={{ color: '#666', fontSize: '14px' }}>
-                    Resend OTP in {resendTimer}s
-                  </p>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={handleResendOTP}
-                    disabled={loading}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      color: '#2563eb',
-                      cursor: 'pointer',
-                      fontSize: '14px',
-                      textDecoration: 'underline'
-                    }}
-                  >
-                    Resend OTP
-                  </button>
-                )}
-              </div>
-              {/* 
-              <button
-                type="button"
-                onClick={handleBack}
-                style={{
-                  marginTop: '10px',
-                  background: '#f3f4f6',
-                  color: '#374151',
-                  border: 'none',
-                  padding: '10px',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                  width: '100%'
-                }}
-              >
-                ← Change Email
-              </button> */}
-            </form>
-          )}
+            {/* Login Button */}
+            <button type="submit" className="login-btn" disabled={loading}>
+              {loading ? "Logging in..." : "Login 🚀"}
+            </button>
+          </form>
+
+         
         </div>
       </div>
     </div>
