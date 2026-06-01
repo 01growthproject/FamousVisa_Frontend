@@ -174,7 +174,6 @@ const FormContent = () => {
   const validateStep = (step) => {
     const newErrors = {};
     let isValid = true;
-
     switch (step) {
       case 1:
         const basicFields = ["clientName", "contact", "dob", "age", "gender", "maritalStatus", "nationality", "hasGovtServant"];
@@ -194,7 +193,6 @@ const FormContent = () => {
         if (formData.education) { const e = validateField("education", formData.education); if (e) { newErrors.education = e; isValid = false; } }
         if (formData.familyMembersCount) { const e = validateField("familyMembersCount", formData.familyMembersCount); if (e) { newErrors.familyMembersCount = e; isValid = false; } }
         break;
-
       case 2:
         ["aadhaarCardNo", "panCardNo"].forEach((field) => {
           const error = validateField(field, formData[field]);
@@ -204,7 +202,6 @@ const FormContent = () => {
           if (formData[field]) { const e = validateField(field, formData[field]); if (e) { newErrors[field] = e; isValid = false; } }
         });
         break;
-
       case 3:
         ["fatherName", "fatherPhone", "motherName"].forEach((field) => {
           const error = validateField(field, formData[field]);
@@ -222,16 +219,12 @@ const FormContent = () => {
           });
         }
         break;
-
       case 4: isValid = true; break;
-
       case 5:
         if (!formData.photo) { newErrors.photo = "Passport photo is required"; isValid = false; }
         break;
-
       default: isValid = true;
     }
-
     setErrors(newErrors);
     return isValid;
   };
@@ -302,21 +295,17 @@ const FormContent = () => {
   const renderStepContent = () => {
     switch (currentStep) {
 
-      /* ── STEP 1 — BASIC INFORMATION ── */
       case 1:
         return (
           <div className="form-section active">
             <h3 className="section-title">Basic Information</h3>
-
             <div className="form-row">
-              {/* ✅ clientName — REQUIRED (*) */}
               <div className="form-group">
-                <label>Client Name</label>
+                <label>Client name</label>
                 <input name="clientName" placeholder="Enter client name" value={formData.clientName}
                   onChange={handleChange} onBlur={handleBlur} className={errors.clientName ? "error" : ""} />
                 {errors.clientName && <span className="error-message">{errors.clientName}</span>}
               </div>
-              {/* ✅ surname — OPTIONAL (no *) */}
               <div className="form-group">
                 <label className="optional">Surname</label>
                 <input name="surname" placeholder="Enter surname (optional)" value={formData.surname}
@@ -324,16 +313,13 @@ const FormContent = () => {
                 {errors.surname && <span className="error-message">{errors.surname}</span>}
               </div>
             </div>
-
             <div className="form-row">
-              {/* ✅ contact — REQUIRED (*) */}
               <div className="form-group">
-                <label>Contact Number</label>
+                <label>Contact number</label>
                 <input name="contact" placeholder="Enter 10-digit contact number" value={formData.contact}
                   onChange={handleChange} onBlur={handleBlur} className={errors.contact ? "error" : ""} maxLength="10" />
                 {errors.contact && <span className="error-message">{errors.contact}</span>}
               </div>
-              {/* ✅ email — OPTIONAL (no *) */}
               <div className="form-group">
                 <label className="optional">Email</label>
                 <input name="email" type="email" placeholder="Enter email" value={formData.email}
@@ -341,17 +327,14 @@ const FormContent = () => {
                 {errors.email && <span className="error-message">{errors.email}</span>}
               </div>
             </div>
-
             <div className="form-row">
-              {/* ✅ dob — REQUIRED (*) */}
               <div className="form-group">
-                <label>Date of Birth</label>
+                <label>Date of birth</label>
                 <input type="date" name="dob" value={formData.dob}
                   onChange={handleChange} onBlur={handleBlur} className={errors.dob ? "error" : ""}
                   max={new Date().toISOString().split("T")[0]} />
                 {errors.dob && <span className="error-message">{errors.dob}</span>}
               </div>
-              {/* ✅ age — REQUIRED (*) but auto filled */}
               <div className="form-group">
                 <label>Age</label>
                 <input name="age" placeholder="Auto calculated" value={formData.age}
@@ -360,14 +343,11 @@ const FormContent = () => {
                 {errors.age && <span className="error-message">{errors.age}</span>}
               </div>
             </div>
-
             <div className="form-row">
-              {/* ✅ country — OPTIONAL (no *) */}
               <div className="form-group">
-                <label className="optional">Previous-Country</label>
+                <label className="optional">Previous country</label>
                 <input name="country" placeholder="Enter country" value={formData.country} onChange={handleChange} />
               </div>
-              {/* ✅ nationality — REQUIRED (*) */}
               <div className="form-group">
                 <label>Nationality</label>
                 <input name="nationality" placeholder="Enter nationality" value={formData.nationality}
@@ -375,41 +355,35 @@ const FormContent = () => {
                 {errors.nationality && <span className="error-message">{errors.nationality}</span>}
               </div>
             </div>
-
             <div className="form-row">
-              {/* ✅ preWorkExperience — OPTIONAL (no *) */}
               <div className="form-group">
-                <label className="optional">Pre Work Experience</label>
+                <label className="optional">Pre work experience</label>
                 <input name="preWorkExperience" placeholder="Enter previous work experience"
                   value={formData.preWorkExperience} onChange={handleChange} />
               </div>
-              {/* ✅ appliedFor — OPTIONAL (no *) */}
               <div className="form-group">
-                <label className="optional">Applied For</label>
+                <label className="optional">Applied for</label>
                 <input name="appliedFor" placeholder="e.g. Malta Work Visa, Canada PR"
                   value={formData.appliedFor} onChange={handleChange} />
               </div>
             </div>
-
             <div className="form-row">
-              {/* ✅ gender — REQUIRED (*) */}
               <div className="form-group">
                 <label>Gender</label>
                 <select name="gender" value={formData.gender}
                   onChange={handleChange} onBlur={handleBlur} className={errors.gender ? "error" : ""}>
-                  <option value="">Select Gender</option>
+                  <option value="">Select gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                   <option value="Other">Other</option>
                 </select>
                 {errors.gender && <span className="error-message">{errors.gender}</span>}
               </div>
-              {/* ✅ maritalStatus — REQUIRED (*) */}
               <div className="form-group">
-                <label>Marital Status</label>
+                <label>Marital status</label>
                 <select name="maritalStatus" value={formData.maritalStatus}
                   onChange={handleChange} onBlur={handleBlur} className={errors.maritalStatus ? "error" : ""}>
-                  <option value="">Select Status</option>
+                  <option value="">Select status</option>
                   <option value="Single">Single</option>
                   <option value="Married">Married</option>
                   <option value="Separated">Separated</option>
@@ -419,32 +393,26 @@ const FormContent = () => {
                 {errors.maritalStatus && <span className="error-message">{errors.maritalStatus}</span>}
               </div>
             </div>
-
             <div className="form-row">
-              {/* ✅ education — OPTIONAL (no *) */}
               <div className="form-group">
                 <label className="optional">Education</label>
                 <input name="education" placeholder="e.g. B.Tech, 12th, MBA-Finance" value={formData.education}
                   onChange={handleChange} onBlur={handleBlur} className={errors.education ? "error" : ""} />
                 {errors.education && <span className="error-message">{errors.education}</span>}
               </div>
-              {/* ✅ occupation — OPTIONAL (no *) */}
               <div className="form-group">
                 <label className="optional">Occupation</label>
                 <input name="occupation" placeholder="Enter occupation" value={formData.occupation} onChange={handleChange} />
               </div>
             </div>
-
             <div className="form-row">
-              {/* ✅ familyMembersCount — OPTIONAL (no *) */}
               <div className="form-group">
-                <label className="optional">Family Members</label>
+                <label className="optional">Family members</label>
                 <input name="familyMembersCount" type="number" placeholder="Number of family members"
                   value={formData.familyMembersCount} onChange={handleChange} onBlur={handleBlur}
                   className={errors.familyMembersCount ? "error" : ""} min="0" max="50" />
                 {errors.familyMembersCount && <span className="error-message">{errors.familyMembersCount}</span>}
               </div>
-              {/* ✅ address — OPTIONAL (no *) */}
               <div className="form-group full-width">
                 <label className="optional">Address</label>
                 <textarea name="address" placeholder="Enter complete address"
@@ -452,18 +420,15 @@ const FormContent = () => {
               </div>
             </div>
 
-            {/* ── GOVERNMENT SERVANT SECTION ── */}
-            <h3 className="section-title" style={{ marginTop: "30px", borderTop: "2px solid #e0e0e0", paddingTop: "20px" }}>
-              🏛️ Government Servant Information
+            <h3 className="section-title" style={{ marginTop: "30px", borderTop: "1px solid #e2e8f0", paddingTop: "24px" }}>
+              🏛️ Government servant information
             </h3>
-
             <div className="form-row">
-              {/* ✅ hasGovtServant — REQUIRED (*) */}
               <div className="form-group">
-                <label>Any Family Member is Government Servant?</label>
+                <label>Any family member is government servant?</label>
                 <select name="hasGovtServant" value={formData.hasGovtServant}
                   onChange={handleChange} onBlur={handleBlur} className={errors.hasGovtServant ? "error" : ""}>
-                  <option value="">Select Option</option>
+                  <option value="">Select option</option>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                 </select>
@@ -474,12 +439,11 @@ const FormContent = () => {
             {formData.hasGovtServant === "Yes" && (
               <>
                 <div className="form-row">
-                  {/* ✅ govtServantRelation — REQUIRED (*) when Yes */}
                   <div className="form-group">
-                    <label>Relation with You</label>
+                    <label>Relation with you</label>
                     <select name="govtServantRelation" value={formData.govtServantRelation}
                       onChange={handleChange} onBlur={handleBlur} className={errors.govtServantRelation ? "error" : ""}>
-                      <option value="">Select Relation</option>
+                      <option value="">Select relation</option>
                       <option value="Father">Father</option>
                       <option value="Mother">Mother</option>
                       <option value="Spouse">Spouse (Husband/Wife)</option>
@@ -491,26 +455,23 @@ const FormContent = () => {
                       <option value="Aunt">Aunt</option>
                       <option value="Grandfather">Grandfather</option>
                       <option value="Grandmother">Grandmother</option>
-                      <option value="Other">Other Relative</option>
+                      <option value="Other">Other relative</option>
                     </select>
                     {errors.govtServantRelation && <span className="error-message">{errors.govtServantRelation}</span>}
                   </div>
-                  {/* ✅ govtServantName — REQUIRED (*) when Yes */}
                   <div className="form-group">
-                    <label>Name of Government Servant</label>
+                    <label>Name of government servant</label>
                     <input name="govtServantName" placeholder="Enter full name" value={formData.govtServantName}
                       onChange={handleChange} onBlur={handleBlur} className={errors.govtServantName ? "error" : ""} />
                     {errors.govtServantName && <span className="error-message">{errors.govtServantName}</span>}
                   </div>
                 </div>
-
                 <div className="form-row">
-                  {/* ✅ govtServantWorkType — REQUIRED (*) when Yes */}
                   <div className="form-group">
-                    <label>Work Type / Organization</label>
+                    <label>Work type / organisation</label>
                     <select name="govtServantWorkType" value={formData.govtServantWorkType}
                       onChange={handleChange} onBlur={handleBlur} className={errors.govtServantWorkType ? "error" : ""}>
-                      <option value="">Select Work Type</option>
+                      <option value="">Select work type</option>
                       <option value="Central Government">Central Government</option>
                       <option value="State Government">State Government</option>
                       <option value="PSU (Public Sector Undertaking)">PSU (Public Sector Undertaking)</option>
@@ -528,9 +489,8 @@ const FormContent = () => {
                     </select>
                     {errors.govtServantWorkType && <span className="error-message">{errors.govtServantWorkType}</span>}
                   </div>
-                  {/* ✅ govtServantDesignation — OPTIONAL (no *) */}
                   <div className="form-group">
-                    <label className="optional">Designation / Post</label>
+                    <label className="optional">Designation / post</label>
                     <input name="govtServantDesignation" placeholder="e.g., Deputy Collector, Teacher, Inspector"
                       value={formData.govtServantDesignation} onChange={handleChange} onBlur={handleBlur}
                       className={errors.govtServantDesignation ? "error" : ""} />
@@ -540,14 +500,12 @@ const FormContent = () => {
               </>
             )}
 
-            {/* ── CONSULAR NAME ── */}
-            <h3 className="section-title" style={{ marginTop: "30px", borderTop: "2px solid #e0e0e0", paddingTop: "20px" }}>
-              🌐 Consular Information
+            <h3 className="section-title" style={{ marginTop: "30px", borderTop: "1px solid #e2e8f0", paddingTop: "24px" }}>
+              🌐 Consular information
             </h3>
             <div className="form-row">
-              {/* ✅ consularName — OPTIONAL (no *) */}
               <div className="form-group">
-                <label className="optional">Consular Name</label>
+                <label className="optional">Consular name</label>
                 <input name="consularName" placeholder="Enter consular name"
                   value={formData.consularName} onChange={handleChange} />
               </div>
@@ -555,50 +513,41 @@ const FormContent = () => {
           </div>
         );
 
-      /* ── STEP 2 — DOCUMENT NUMBERS ── */
       case 2:
         return (
           <div className="form-section active">
-            <h3 className="section-title">Document Numbers</h3>
-
+            <h3 className="section-title">Document numbers</h3>
             <div className="form-row">
-              {/* ✅ aadhaarCardNo — REQUIRED (*) */}
               <div className="form-group">
-                <label>Aadhaar Card No</label>
+                <label>Aadhaar card no.</label>
                 <input name="aadhaarCardNo" placeholder="Enter 12-digit Aadhaar number" value={formData.aadhaarCardNo}
                   onChange={handleChange} onBlur={handleBlur} className={errors.aadhaarCardNo ? "error" : ""} maxLength="12" />
                 {errors.aadhaarCardNo && <span className="error-message">{errors.aadhaarCardNo}</span>}
               </div>
-              {/* ✅ panCardNo — REQUIRED (*) */}
               <div className="form-group">
-                <label>PAN Card No</label>
+                <label>PAN card no.</label>
                 <input name="panCardNo" placeholder="Enter PAN (e.g., ABCDE1234F)" value={formData.panCardNo}
                   onChange={handleChange} onBlur={handleBlur} className={errors.panCardNo ? "error" : ""} maxLength="10" />
                 {errors.panCardNo && <span className="error-message">{errors.panCardNo}</span>}
               </div>
             </div>
-
             <div className="form-row">
-              {/* ✅ passportNo — OPTIONAL (no *) */}
               <div className="form-group">
-                <label >Passport No</label>
+                <label className="optional">Passport no.</label>
                 <input name="passportNo" placeholder="Enter Passport (e.g., A1234567)" value={formData.passportNo}
                   onChange={handleChange} onBlur={handleBlur} className={errors.passportNo ? "error" : ""} maxLength="9" />
                 {errors.passportNo && <span className="error-message">{errors.passportNo}</span>}
               </div>
-              {/* ✅ drivingLicenseNo — OPTIONAL (no *) */}
               <div className="form-group">
-                <label className="optional">Driving License No</label>
+                <label className="optional">Driving license no.</label>
                 <input name="drivingLicenseNo" placeholder="Enter License (e.g., MH1234567890123)" value={formData.drivingLicenseNo}
                   onChange={handleChange} onBlur={handleBlur} className={errors.drivingLicenseNo ? "error" : ""} maxLength="15" />
                 {errors.drivingLicenseNo && <span className="error-message">{errors.drivingLicenseNo}</span>}
               </div>
             </div>
-
             <div className="form-row">
-              {/* ✅ voterCardNo — OPTIONAL (no *) */}
               <div className="form-group">
-                <label className="optional">Voter Card No</label>
+                <label className="optional">Voter card no.</label>
                 <input name="voterCardNo" placeholder="Enter Voter Card (e.g., ABC1234567)" value={formData.voterCardNo}
                   onChange={handleChange} onBlur={handleBlur} className={errors.voterCardNo ? "error" : ""} maxLength="10" />
                 {errors.voterCardNo && <span className="error-message">{errors.voterCardNo}</span>}
@@ -607,72 +556,65 @@ const FormContent = () => {
           </div>
         );
 
-      /* ── STEP 3 — FAMILY DETAILS ── */
       case 3:
         return (
           <div className="form-section active">
-            <h3 className="section-title">Father Details</h3>
+            <h3 className="section-title">Father details</h3>
             <div className="form-row">
-              {/* ✅ fatherName — REQUIRED (*) */}
               <div className="form-group">
-                <label>Father Name</label>
+                <label>Father name</label>
                 <input name="fatherName" placeholder="Enter father's name" value={formData.fatherName}
                   onChange={handleChange} onBlur={handleBlur} className={errors.fatherName ? "error" : ""} />
                 {errors.fatherName && <span className="error-message">{errors.fatherName}</span>}
               </div>
-              {/* ✅ fatherSurname — OPTIONAL (no *) */}
               <div className="form-group">
-                <label className="optional">Father Surname</label>
+                <label className="optional">Father surname</label>
                 <input name="fatherSurname" placeholder="Enter father's surname (optional)" value={formData.fatherSurname}
                   onChange={handleChange} onBlur={handleBlur} className={errors.fatherSurname ? "error" : ""} />
                 {errors.fatherSurname && <span className="error-message">{errors.fatherSurname}</span>}
               </div>
             </div>
             <div className="form-row">
-              {/* ✅ fatherPhone — REQUIRED (*) */}
               <div className="form-group">
-                <label>Father Phone</label>
+                <label>Father phone</label>
                 <input name="fatherPhone" placeholder="Enter 10-digit phone number" value={formData.fatherPhone}
                   onChange={handleChange} onBlur={handleBlur} className={errors.fatherPhone ? "error" : ""} maxLength="10" />
                 {errors.fatherPhone && <span className="error-message">{errors.fatherPhone}</span>}
               </div>
-              {/* ✅ fatherEmail — OPTIONAL (no *) */}
               <div className="form-group">
-                <label className="optional">Father Email</label>
+                <label className="optional">Father email</label>
                 <input name="fatherEmail" type="email" placeholder="Enter father's email" value={formData.fatherEmail}
                   onChange={handleChange} onBlur={handleBlur} className={errors.fatherEmail ? "error" : ""} />
                 {errors.fatherEmail && <span className="error-message">{errors.fatherEmail}</span>}
               </div>
             </div>
 
-            <h3 className="section-title" style={{ marginTop: "30px" }}>Mother Details</h3>
+            <h3 className="section-title" style={{ marginTop: "30px", borderTop: "1px solid #e2e8f0", paddingTop: "24px" }}>
+              Mother details
+            </h3>
             <div className="form-row">
-              {/* ✅ motherName — REQUIRED (*) */}
               <div className="form-group">
-                <label>Mother Name</label>
+                <label>Mother name</label>
                 <input name="motherName" placeholder="Enter mother's name" value={formData.motherName}
                   onChange={handleChange} onBlur={handleBlur} className={errors.motherName ? "error" : ""} />
                 {errors.motherName && <span className="error-message">{errors.motherName}</span>}
               </div>
-              {/* ✅ motherSurname — OPTIONAL (no *) */}
               <div className="form-group">
-                <label className="optional">Mother Surname</label>
+                <label className="optional">Mother surname</label>
                 <input name="motherSurname" placeholder="Enter mother's surname (optional)" value={formData.motherSurname}
                   onChange={handleChange} onBlur={handleBlur} className={errors.motherSurname ? "error" : ""} />
                 {errors.motherSurname && <span className="error-message">{errors.motherSurname}</span>}
               </div>
             </div>
             <div className="form-row">
-              {/* ✅ motherPhone — OPTIONAL (no *) */}
               <div className="form-group">
-                <label className="optional">Mother Phone</label>
+                <label className="optional">Mother phone</label>
                 <input name="motherPhone" placeholder="Enter 10-digit phone number (optional)" value={formData.motherPhone}
                   onChange={handleChange} onBlur={handleBlur} className={errors.motherPhone ? "error" : ""} maxLength="10" />
                 {errors.motherPhone && <span className="error-message">{errors.motherPhone}</span>}
               </div>
-              {/* ✅ motherEmail — OPTIONAL (no *) */}
               <div className="form-group">
-                <label className="optional">Mother Email</label>
+                <label className="optional">Mother email</label>
                 <input name="motherEmail" type="email" placeholder="Enter mother's email" value={formData.motherEmail}
                   onChange={handleChange} onBlur={handleBlur} className={errors.motherEmail ? "error" : ""} />
                 {errors.motherEmail && <span className="error-message">{errors.motherEmail}</span>}
@@ -681,34 +623,32 @@ const FormContent = () => {
 
             {formData.maritalStatus === "Married" && (
               <>
-                <h3 className="section-title" style={{ marginTop: "30px" }}>Spouse Details</h3>
+                <h3 className="section-title" style={{ marginTop: "30px", borderTop: "1px solid #e2e8f0", paddingTop: "24px" }}>
+                  Spouse details
+                </h3>
                 <div className="form-row">
-                  {/* ✅ spouseName — OPTIONAL (no *) */}
                   <div className="form-group">
-                    <label className="optional">Spouse Name</label>
+                    <label className="optional">Spouse name</label>
                     <input name="spouseName" placeholder="Enter spouse's name" value={formData.spouseName}
                       onChange={handleChange} onBlur={handleBlur} className={errors.spouseName ? "error" : ""} />
                     {errors.spouseName && <span className="error-message">{errors.spouseName}</span>}
                   </div>
-                  {/* ✅ spouseSurname — OPTIONAL (no *) */}
                   <div className="form-group">
-                    <label className="optional">Spouse Surname</label>
+                    <label className="optional">Spouse surname</label>
                     <input name="spouseSurname" placeholder="Enter spouse's surname" value={formData.spouseSurname}
                       onChange={handleChange} onBlur={handleBlur} className={errors.spouseSurname ? "error" : ""} />
                     {errors.spouseSurname && <span className="error-message">{errors.spouseSurname}</span>}
                   </div>
                 </div>
                 <div className="form-row">
-                  {/* ✅ spousePhone — OPTIONAL (no *) */}
                   <div className="form-group">
-                    <label className="optional">Spouse Phone</label>
+                    <label className="optional">Spouse phone</label>
                     <input name="spousePhone" placeholder="Enter 10-digit phone number" value={formData.spousePhone}
                       onChange={handleChange} onBlur={handleBlur} className={errors.spousePhone ? "error" : ""} maxLength="10" />
                     {errors.spousePhone && <span className="error-message">{errors.spousePhone}</span>}
                   </div>
-                  {/* ✅ spouseEmail — OPTIONAL (no *) */}
                   <div className="form-group">
-                    <label className="optional">Spouse Email</label>
+                    <label className="optional">Spouse email</label>
                     <input name="spouseEmail" type="email" placeholder="Enter spouse's email" value={formData.spouseEmail}
                       onChange={handleChange} onBlur={handleBlur} className={errors.spouseEmail ? "error" : ""} />
                     {errors.spouseEmail && <span className="error-message">{errors.spouseEmail}</span>}
@@ -719,27 +659,26 @@ const FormContent = () => {
           </div>
         );
 
-      /* ── STEP 4 — DOCUMENT CAPTURE ── */
       case 4:
         return (
           <div className="form-section active">
-            <h3 className="section-title">📸 Live Document Capture</h3>
-            <p className="hint">Capture all documents using your camera (Front &amp; Back where applicable)</p>
+            <h3 className="section-title">📸 Live document capture</h3>
+            <p className="hint">Capture all documents using your camera (front &amp; back where applicable)</p>
             <div className="documents-grid">
               {[
-                ["Aadhaar Front *", "AadhaarFront"],
-                ["Aadhaar Back *", "AadhaarBack"],
-                ["Capture PAN Card *", "PANCard"],
-                ["Capture Passport Front *", "PassportFront"],
-                ["Capture Passport Back *", "PassportBack"],
-                ["Capture License Front", "DrivingLicenseFront"],
-                ["Capture License Back", "DrivingLicenseBack"],
-                ["Capture Voter Card Front", "VoterCardFront"],
-                ["Capture Voter Card Back", "VoterCardBack"],
-                ["Capture Marksheet Front", "MarksheetFront"],
-                ["Capture Marksheet Back", "MarksheetBack"],
-                ["Capture CV Page 1", "CVPage1"],
-                ["Capture CV Page 2", "CVPage2"],
+                ["Aadhaar front *", "AadhaarFront"],
+                ["Aadhaar back *", "AadhaarBack"],
+                ["PAN card *", "PANCard"],
+                ["Passport front *", "PassportFront"],
+                ["Passport back *", "PassportBack"],
+                ["Driving license front", "DrivingLicenseFront"],
+                ["Driving license back", "DrivingLicenseBack"],
+                ["Voter card front", "VoterCardFront"],
+                ["Voter card back", "VoterCardBack"],
+                ["Marksheet front", "MarksheetFront"],
+                ["Marksheet back", "MarksheetBack"],
+                ["CV page 1", "CVPage1"],
+                ["CV page 2", "CVPage2"],
               ].map(([label, type]) => (
                 <div key={type} className="document-capture-item">
                   <CameraInput label={label} setFile={(file) => handleDocumentCapture(type, file)} />
@@ -749,11 +688,10 @@ const FormContent = () => {
           </div>
         );
 
-      /* ── STEP 5 — PASSPORT PHOTO ── */
       case 5:
         return (
           <div className="form-section active">
-            <h3 className="section-title">👤 Live Photo</h3>
+            <h3 className="section-title">👤 Passport size photo</h3>
             <p className="hint">Capture client's passport size photo (35mm x 45mm ratio)</p>
             {errors.photo && (
               <span className="error-message" style={{ display: "block", marginBottom: "10px" }}>
@@ -763,7 +701,7 @@ const FormContent = () => {
             <div className="passport-photo-container">
               <div className="passport-photo-frame">
                 <CameraInput
-                  label="Capture Photo"
+                  label="Capture photo"
                   setFile={(file) => {
                     setFormData((prev) => ({ ...prev, photo: file }));
                     setErrors((prev) => ({ ...prev, photo: "" }));
@@ -784,28 +722,27 @@ const FormContent = () => {
           </div>
         );
 
-      /* ── STEP 6 — REVIEW & SUBMIT ── */
       case 6:
         return (
           <div className="form-section active">
-            <h3 className="section-title">📋 Review &amp; Submit</h3>
+            <h3 className="section-title">📋 Review &amp; submit</h3>
             <div className="review-section">
               <div className="review-card">
-                <h4>Basic Information</h4>
+                <h4>Basic information</h4>
                 {[
-                  ["Full Name", `${formData.clientName}${formData.surname ? " " + formData.surname : ""}`],
+                  ["Full name", `${formData.clientName}${formData.surname ? " " + formData.surname : ""}`],
                   ["Contact", formData.contact],
                   ["Email", formData.email],
-                  ["Date of Birth", formData.dob],
+                  ["Date of birth", formData.dob],
                   ["Age", formData.age],
                   ["Gender", formData.gender],
-                  ["Marital Status", formData.maritalStatus],
+                  ["Marital status", formData.maritalStatus],
                   ["Country", formData.country],
                   ["Nationality", formData.nationality],
                   ["Education", formData.education],
                   ["Occupation", formData.occupation],
-                  ["Applied For", formData.appliedFor],
-                  ["Family Members", formData.familyMembersCount],
+                  ["Applied for", formData.appliedFor],
+                  ["Family members", formData.familyMembersCount],
                   ["Address", formData.address],
                 ].map(([label, val]) => (
                   <div key={label} className="review-item">
@@ -817,10 +754,10 @@ const FormContent = () => {
               </div>
 
               <div className="review-card">
-                <h4>✈️ Additional Information</h4>
+                <h4>✈️ Additional information</h4>
                 {[
-                  ["Pre Work Experience", formData.preWorkExperience],
-                  ["Consular Name", formData.consularName],
+                  ["Pre work experience", formData.preWorkExperience],
+                  ["Consular name", formData.consularName],
                 ].map(([label, val]) => (
                   <div key={label} className="review-item">
                     <span>{label}:</span>
@@ -831,14 +768,14 @@ const FormContent = () => {
               </div>
 
               <div className="review-card">
-                <h4>🏛️ Government Servant Information</h4>
+                <h4>🏛️ Government servant information</h4>
                 <div className="review-item">
-                  <span>Family Member in Govt Service:</span>
+                  <span>Family member in govt service:</span>
                   <strong>{formData.hasGovtServant || "N/A"}</strong>
                 </div>
                 {formData.hasGovtServant === "Yes" && (
                   [["Relation", formData.govtServantRelation], ["Name", formData.govtServantName],
-                   ["Work Type", formData.govtServantWorkType], ["Designation", formData.govtServantDesignation]].map(([l, v]) => (
+                   ["Work type", formData.govtServantWorkType], ["Designation", formData.govtServantDesignation]].map(([l, v]) => (
                     <div key={l} className="review-item"><span>{l}:</span><strong>{v || "N/A"}</strong></div>
                   ))
                 )}
@@ -846,17 +783,17 @@ const FormContent = () => {
               </div>
 
               <div className="review-card">
-                <h4>Document Numbers</h4>
+                <h4>Document numbers</h4>
                 {[["Aadhaar", formData.aadhaarCardNo], ["PAN", formData.panCardNo],
-                  ["Passport", formData.passportNo], ["Driving License", formData.drivingLicenseNo],
-                  ["Voter Card", formData.voterCardNo]].map(([l, v]) => (
+                  ["Passport", formData.passportNo], ["Driving license", formData.drivingLicenseNo],
+                  ["Voter card", formData.voterCardNo]].map(([l, v]) => (
                   <div key={l} className="review-item"><span>{l}:</span><strong>{v || "N/A"}</strong></div>
                 ))}
                 <button className="edit-btn" onClick={() => goToStep(2)}>Edit</button>
               </div>
 
               <div className="review-card">
-                <h4>Father Details</h4>
+                <h4>Father details</h4>
                 {[["Name", `${formData.fatherName}${formData.fatherSurname ? " " + formData.fatherSurname : ""}`],
                   ["Phone", formData.fatherPhone], ["Email", formData.fatherEmail]].map(([l, v]) => (
                   <div key={l} className="review-item"><span>{l}:</span><strong>{v || "N/A"}</strong></div>
@@ -865,7 +802,7 @@ const FormContent = () => {
               </div>
 
               <div className="review-card">
-                <h4>Mother Details</h4>
+                <h4>Mother details</h4>
                 {[["Name", `${formData.motherName}${formData.motherSurname ? " " + formData.motherSurname : ""}`],
                   ["Phone", formData.motherPhone], ["Email", formData.motherEmail]].map(([l, v]) => (
                   <div key={l} className="review-item"><span>{l}:</span><strong>{v || "N/A"}</strong></div>
@@ -875,7 +812,7 @@ const FormContent = () => {
 
               {formData.maritalStatus === "Married" && (
                 <div className="review-card">
-                  <h4>Spouse Details</h4>
+                  <h4>Spouse details</h4>
                   {[["Name", `${formData.spouseName}${formData.spouseSurname ? " " + formData.spouseSurname : ""}`],
                     ["Phone", formData.spousePhone], ["Email", formData.spouseEmail]].map(([l, v]) => (
                     <div key={l} className="review-item"><span>{l}:</span><strong>{v || "N/A"}</strong></div>
@@ -885,9 +822,9 @@ const FormContent = () => {
               )}
 
               <div className="review-card">
-                <h4>Captured Documents</h4>
+                <h4>Captured documents</h4>
                 <div className="review-item">
-                  <span>Total Documents:</span>
+                  <span>Total documents:</span>
                   <strong>{documentsMeta.length} file(s)</strong>
                 </div>
                 {documentsMeta.map((doc, i) => (
@@ -898,27 +835,27 @@ const FormContent = () => {
                 {documentsMeta.length === 0 && (
                   <div className="review-item"><span>Status:</span><strong className="warning-text">No documents captured</strong></div>
                 )}
-                <button className="edit-btn" onClick={() => goToStep(4)}>Edit Documents</button>
+                <button className="edit-btn" onClick={() => goToStep(4)}>Edit documents</button>
               </div>
 
               <div className="review-card">
-                <h4>Passport Size Photo</h4>
+                <h4>Passport size photo</h4>
                 <div className="review-item">
-                  <span>Client Photo:</span>
+                  <span>Client photo:</span>
                   <strong className={formData.photo ? "success-text" : "warning-text"}>
-                    {formData.photo ? "✓ Captured" : "✗ Not Captured"}
+                    {formData.photo ? "✓ Captured" : "✗ Not captured"}
                   </strong>
                 </div>
                 {formData.photo && (
-                  <div className="review-item"><span>File Name:</span><strong>{formData.photo.name}</strong></div>
+                  <div className="review-item"><span>File name:</span><strong>{formData.photo.name}</strong></div>
                 )}
-                <button className="edit-btn" onClick={() => goToStep(5)}>Edit Photo</button>
+                <button className="edit-btn" onClick={() => goToStep(5)}>Edit photo</button>
               </div>
 
               {!formData.photo && (
                 <div className="review-card warning-card">
-                  <h4>⚠️ Incomplete Submission</h4>
-                  <div className="review-item"><span>Missing:</span><strong>Passport Size Photo (Required)</strong></div>
+                  <h4>⚠️ Incomplete submission</h4>
+                  <div className="review-item"><span>Missing:</span><strong>Passport size photo (required)</strong></div>
                   <p className="hint">Please capture passport photo before submitting.</p>
                 </div>
               )}
@@ -936,17 +873,14 @@ const FormContent = () => {
       <div className="form-wrapper">
         <div className="form-container">
           <div className="form-header">
-            <h2>Registration Form📋</h2>
-            {/* <p>Complete KYC with Live Document Capture</p> */}
+            <h2>Registration Form 📋</h2>
           </div>
-
           <div className="progress-container">
             <div className="progress-bar">
               <div className="progress-fill" style={{ width: `${(currentStep / totalSteps) * 100}%` }} />
             </div>
             <div className="progress-text">Step {currentStep} of {totalSteps}</div>
           </div>
-
           <div className="step-indicators">
             {stepTitles.map((title, index) => (
               <div key={index}
@@ -957,7 +891,6 @@ const FormContent = () => {
               </div>
             ))}
           </div>
-
           <form onSubmit={handleSubmit} className="form">
             {renderStepContent()}
             <div className="form-actions">
