@@ -2,7 +2,7 @@ import axios from "axios";
 
 const Api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  timeout: 10000,
+  timeout: 40000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -68,7 +68,7 @@ Api.interceptors.response.use(
       return Promise.reject(error);
     } else if (error.request) {
       console.error("❌ Network Error - No response from server");
-      return Promise.reject(new Error("Network error: No response from server"));
+      return Promise.reject(new Error("Server se response nahi aaya. Agar pehli baar open kar rahe hain toh 30-40 seconds wait karke dobara try karein (Render free tier slow start hota hai)."));
     } else {
       console.error("❌ Error:", error.message);
       return Promise.reject(error);
