@@ -174,7 +174,7 @@ const Login = () => {
                 />
                 Remember me
               </label>
-              <a href="/forgot-password">Forgot password?</a>
+              {/* <a href="/forgot-password">Forgot password?</a> */}
             </div>
 
             {/* Login Button */}
